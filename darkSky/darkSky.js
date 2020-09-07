@@ -17,7 +17,7 @@ const getWeather = (latitude, Longtitude, callBack) => {
         Sumary: summary,
         Icon: icon,
         Temperature: temperature,
-      });
+      }, undefined);
     }
   );
 };

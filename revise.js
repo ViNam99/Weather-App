@@ -1,5 +1,5 @@
 const geoCode = require("./geoCode/geoCode");
-const getWeather = require("./darkSky");
+const getWeather = require("./darkSky/darkSky");
 const yargs = require("yargs");
 
 const argv = yargs

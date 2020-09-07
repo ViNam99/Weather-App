@@ -1,4 +1,5 @@
-const request = require("request");
+const getgeoCode = require("./Services/googleApi");
+const getDarkSky = require("./Services/darkSkyAPI")
 const yargs = require("yargs");
 
 const argv = yargs
@@ -13,23 +14,16 @@ const argv = yargs
   .help()
   .alias("help", "h").argv;
 
-console.log(argv);
-
 const address = argv.address;
 
-request.get(
-  {
-    url: `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDBunJ4GXNEC3KJlpoGJO-iB--CjPv4o-s&address=${address}`,
-    json: true,
-  },
-  (err, response, body) => {
-    if (err && err.code === "ENOTFOUND")
-      return console.log("Cannot Connect to maps.googleapis.com");
-    if (body.status === "ZERO_RESULTS") return console.log("Address not Found");
-    const { formatted_address, geometry } = body.results[0];
-    const { lat, lng } = geometry.location;
-    console.log(formatted_address);
-    console.log(lat);
-    console.log(lng);
-  }
-);
+getgeoCode.getGoogleApi(address, (err, res) => {
+  if (err) return console.log(err);
+  const {Latitude, Longtitude} = res;
+  getDarkSky.getDarkSkyAPI(Latitude, Longtitude, (err , res) => {
+      if(err) return console.log(err);
+      const {summary, icon , temperature} = res;
+      console.log("Summary: " , summary);
+      console.log("Icon: " , icon);
+      console.log("Temperature: " , temperature);
+  })
+});
