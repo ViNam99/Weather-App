@@ -11,10 +11,8 @@ const geoCodeAddress = (address, callBack) => {
     (err, response, body) => {
       if (err && err.code === "ENOTFOUND")
         return callBack(undefined, "Cannot Connect to maps.googleapis.com");
-      // return console.log("Cannot Connect to maps.googleapis.com");
       if (body.status === "ZERO_RESULTS")
         return callBack(undefined, "Address not Found");
-      // return console.log("Address not Found");
 
       const { formatted_address, geometry } = body.results[0];
       const { lat, lng } = geometry.location;

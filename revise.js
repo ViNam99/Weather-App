@@ -1,4 +1,5 @@
 const geoCode = require("./geoCode/geoCode");
+const getWeather = require("./darkSky");
 const yargs = require("yargs");
 
 const argv = yargs
@@ -17,5 +18,9 @@ const argv = yargs
 
 geoCode.geoCodeAddress(argv.address, (res, err) => {
   if (err) return console.log(err);
-  console.log(res);
+
+  getWeather.getWeather(res.Latitude, res.Longtitude, (res, err) => {
+    if (err) return console.log(err);
+    console.log(res);
+  });
 });
