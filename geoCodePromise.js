@@ -26,10 +26,13 @@ axios({
       return console.log("Address not Found");
 
     const { formatted_address, geometry } = res.data.results[0];
-    const { lat, lng } = geometry.location;
-    console.log(formatted_address);
-    console.log(lat);
-    console.log(lng);
+    return ({ lat, lng } = geometry.location);
+  })
+  .then((res) => {
+    const { lat, lng } = res;
+    axios({
+      
+    })
   })
   .catch((err) => {
     if (err && err.code)
